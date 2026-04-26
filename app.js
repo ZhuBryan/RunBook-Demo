@@ -75,7 +75,4 @@ document.addEventListener("click", (event) => {
     toast("Template selected.");
     return;
   }
-  if (label.includes("settings")) {
-    activate("settings");
-  }
 });

@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Northstar Workflow Builder Demo</title>
+    <meta
+      name="description"
+      content="A realistic multi-surface SaaS demo for Runbook widget onboarding."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="logo">NW</div>
+          <div>
+            <p class="kicker">Northstar</p>
+            <h1>Workflow Builder</h1>
+          </div>
+        </div>
+        <div class="topbar-actions">
+          <button type="button" id="newWorkflowBtn" class="primary-btn" data-runbook-feature="create-workflow" data-runbook-title="Create Workflow" data-runbook-description="Create a new automation flow from blank or template.">
+            Create Workflow
+          </button>
+          <button type="button" id="openCommandPaletteBtn" class="ghost-btn" data-runbook-feature="command-palette" data-runbook-title="Command Palette" data-runbook-description="Quickly navigate or trigger key actions from anywhere.">
+            Command Palette
+          </button>
+        </div>
+      </header>
+
+      <div class="main-grid">
+        <aside class="sidebar">
+          <p class="section-label">Workspace</p>
+          <nav id="navMenu">
+            <button type="button" class="nav-item active" data-view="overview" data-runbook-feature="overview-dashboard" data-runbook-title="Overview Dashboard" data-runbook-description="View onboarding health and top setup blockers.">Overview</button>
+            <button type="button" class="nav-item" data-view="workflows" data-runbook-feature="workflow-builder" data-runbook-title="Workflow Builder" data-runbook-description="Design trigger-condition-action automation flows.">Workflows</button>
+            <button type="button" class="nav-item" data-view="integrations" data-runbook-feature="integrations-panel" data-runbook-title="Integrations Panel" data-runbook-description="Connect source and destination apps for automations.">Integrations</button>
+            <button type="button" class="nav-item" data-view="api-keys" data-runbook-feature="api-key-setup" data-runbook-title="API Key Setup" data-runbook-description="Generate secure API keys for staging and production.">API Keys</button>
+            <button type="button" class="nav-item" data-view="deployments" data-runbook-feature="deployment-status" data-runbook-title="Deployment Status" data-runbook-description="Track rollout progress and rollback safety controls.">Deployments</button>
+            <button type="button" class="nav-item" data-view="settings" data-runbook-feature="settings-panel" data-runbook-title="Settings Panel" data-runbook-description="Configure workspace defaults and assistant behavior.">Settings</button>
+          </nav>
+
+          <div class="checklist" data-runbook-feature="onboarding-checklist" data-runbook-title="Onboarding Checklist" data-runbook-description="Follow this sequence to launch onboarding successfully.">
+            <p class="section-label">Launch Checklist</p>
+            <ol>
+              <li>Connect two integrations</li>
+              <li>Create a staging API key</li>
+              <li>Publish first workflow</li>
+              <li>Deploy to staging</li>
+            </ol>
+          </div>
+        </aside>
+
+        <main class="content">
+          <section id="view-overview" class="view active-view">
+            <div class="cards four-col">
+              <article class="metric-card" data-runbook-feature="workflow-health" data-runbook-title="Workflow Health" data-runbook-description="Review throughput, failures, and latency trends.">
+                <h3>Workflow Health</h3>
+                <p class="metric" id="healthMetric">98.6%</p>
+                <p class="subtle">7 active runs · 0 critical alerts</p>
+              </article>
+              <article class="metric-card" data-runbook-feature="integration-coverage" data-runbook-title="Integration Coverage" data-runbook-description="Track which essential connectors are configured.">
+                <h3>Integration Coverage</h3>
+                <p class="metric" id="integrationMetric">4 / 7</p>
+                <p class="subtle">GitHub + Slack connected</p>
+              </article>
+              <article class="metric-card" data-runbook-feature="api-key-compliance" data-runbook-title="API Key Compliance" data-runbook-description="See whether environment keys are present and rotated.">
+                <h3>API Key Compliance</h3>
+                <p class="metric" id="keyMetric">2 / 2</p>
+                <p class="subtle">Staging and production keys active</p>
+              </article>
+              <article class="metric-card" data-runbook-feature="deployment-readiness" data-runbook-title="Deployment Readiness" data-runbook-description="Determine whether release gates are met.">
+                <h3>Deployment Readiness</h3>
+                <p class="metric" id="deployMetric">Ready</p>
+                <p class="subtle">All release checks passing</p>
+              </article>
+            </div>
+
+            <div class="cards two-col">
+              <article class="panel" data-runbook-feature="starter-templates" data-runbook-title="Starter Templates" data-runbook-description="Choose a quick-start template for common onboarding flows.">
+                <h2>Starter Templates</h2>
+                <div class="template-list">
+                  <button type="button" class="template-item">Release Automation</button>
+                  <button type="button" class="template-item">Lead Qualification</button>
+                  <button type="button" class="template-item">Incident Escalation</button>
+                </div>
+              </article>
+              <article class="panel" data-runbook-feature="activity-feed" data-runbook-title="Activity Feed" data-runbook-description="Monitor recent changes and execution events.">
+                <h2>Activity Feed</h2>
+                <ul class="activity-list" id="activityFeed">
+                  <li>Workflow "Release Guardrail" edited by Bryan</li>
+                  <li>Slack integration token rotated</li>
+                  <li>Staging deployment canary reached 75%</li>
+                </ul>
+              </article>
+            </div>
+          </section>
+
+          <section id="view-workflows" class="view">
+            <article class="panel" data-runbook-feature="workflow-canvas" data-runbook-title="Workflow Canvas" data-runbook-description="Configure trigger, conditions, and actions before deployment.">
+              <h2>Workflow Canvas</h2>
+              <div class="flow-grid">
+                <div class="flow-step">
+                  <p class="section-label">Trigger</p>
+                  <p>GitHub pull request opened</p>
+                </div>
+                <div class="flow-step">
+                  <p class="section-label">Condition</p>
+                  <p>Files changed includes /api</p>
+                </div>
+                <div class="flow-step">
+                  <p class="section-label">Action</p>
+                  <p>Request review in #api-guild</p>
+                </div>
+              </div>
+            </article>
+          </section>
+
+          <section id="view-integrations" class="view">
+            <article class="panel" data-runbook-feature="integration-cards" data-runbook-title="Integration Cards" data-runbook-description="Manage connector health and auth state.">
+              <h2>Integrations</h2>
+              <div class="cards three-col" id="integrationCards"></div>
+            </article>
+          </section>
+
+          <section id="view-api-keys" class="view">
+            <article class="panel" data-runbook-feature="api-key-generator" data-runbook-title="API Key Generator" data-runbook-description="Generate scoped keys for each environment.">
+              <h2>Create API Key</h2>
+              <form id="apiKeyForm" class="form-grid">
+                <label for="keyName">Key name</label>
+                <input id="keyName" name="keyName" placeholder="web-staging" />
+                <label for="keyEnv">Environment</label>
+                <select id="keyEnv" name="keyEnv">
+                  <option>Staging</option>
+                  <option>Production</option>
+                </select>
+                <button type="submit" class="primary-btn">Generate key</button>
+              </form>
+            </article>
+          </section>
+
+          <section id="view-deployments" class="view">
+            <article class="panel" data-runbook-feature="rollout-progress" data-runbook-title="Rollout Progress" data-runbook-description="Observe rollout phase and control release safety.">
+              <h2>Rollout Progress</h2>
+              <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" aria-label="Production rollout progress">
+                <div class="progress-fill"></div>
+              </div>
+              <p class="subtle">75% complete · Production canary in progress</p>
+              <div class="btn-row">
+                <button type="button" class="ghost-btn">Pause rollout</button>
+                <button type="button" class="danger-btn">Rollback now</button>
+              </div>
+            </article>
+          </section>
+
+          <section id="view-settings" class="view">
+            <article class="panel" data-runbook-feature="assistant-branding" data-runbook-title="Assistant Branding" data-runbook-description="Customize the embedded assistant identity and behavior.">
+              <h2>Assistant Settings</h2>
+              <div class="form-grid">
+                <label for="assistantName">Assistant name</label>
+                <input id="assistantName" value="Runbook Assistant" />
+                <label for="brandColor">Brand color</label>
+                <input id="brandColor" type="color" value="#6366f1" />
+              </div>
+            </article>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <!-- Replace data-project-id with your Studio project and set data-runbook-origin to your deployment -->
+    <script
+      src="https://runbook-main.vercel.app/runbook-embed.js"
+      data-project-id="northstar-demo"
+      data-runbook-origin="https://runbook-main.vercel.app"
+      data-include-body-text
+    ></script>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

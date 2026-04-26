@@ -4,180 +4,183 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Northstar Workflow Builder Demo</title>
-    <meta
-      name="description"
-      content="A realistic multi-surface SaaS demo for Runbook widget onboarding."
-    />
-    <link rel="stylesheet" href="./styles.css" />
+    <meta name="description" content="Faithful static clone of RunBook embed-demo surface." />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .rb-view { display: none; }
+      .rb-view.active { display: block; }
+      .rb-nav.active { background: rgba(99, 102, 241, 0.2); color: #e0e7ff; }
+    </style>
   </head>
-  <body>
-    <div class="app-shell">
-      <header class="topbar">
-        <div class="brand">
-          <div class="logo">NW</div>
+  <body class="min-h-screen bg-slate-950 text-slate-100">
+    <header class="sticky top-0 z-20 border-b border-white/10 bg-slate-950/95 backdrop-blur">
+      <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3">
+        <div class="flex items-center gap-3">
+          <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-sm font-black text-white shadow-lg shadow-indigo-900/40">NW</div>
           <div>
-            <p class="kicker">Northstar</p>
-            <h1>Workflow Builder</h1>
+            <p class="text-[11px] font-semibold uppercase tracking-[0.15em] text-indigo-300">Northstar</p>
+            <h1 class="text-base font-semibold text-white sm:text-lg">Workflow Builder</h1>
           </div>
         </div>
-        <div class="topbar-actions">
-          <button type="button" id="newWorkflowBtn" class="primary-btn" data-runbook-feature="create-workflow" data-runbook-title="Create Workflow" data-runbook-description="Create a new automation flow from blank or template.">
-            Create Workflow
-          </button>
-          <button type="button" id="openCommandPaletteBtn" class="ghost-btn" data-runbook-feature="command-palette" data-runbook-title="Command Palette" data-runbook-description="Quickly navigate or trigger key actions from anywhere.">
-            Command Palette
-          </button>
+        <div class="hidden rounded-full border border-indigo-400/30 bg-indigo-500/10 px-3 py-1 text-xs text-indigo-100 lg:block">
+          Active knowledge: <span class="font-semibold">RunBook-Demo repo</span>
         </div>
-      </header>
-
-      <div class="main-grid">
-        <aside class="sidebar">
-          <p class="section-label">Workspace</p>
-          <nav id="navMenu">
-            <button type="button" class="nav-item active" data-view="overview" data-runbook-feature="overview-dashboard" data-runbook-title="Overview Dashboard" data-runbook-description="View onboarding health and top setup blockers.">Overview</button>
-            <button type="button" class="nav-item" data-view="workflows" data-runbook-feature="workflow-builder" data-runbook-title="Workflow Builder" data-runbook-description="Design trigger-condition-action automation flows.">Workflows</button>
-            <button type="button" class="nav-item" data-view="integrations" data-runbook-feature="integrations-panel" data-runbook-title="Integrations Panel" data-runbook-description="Connect source and destination apps for automations.">Integrations</button>
-            <button type="button" class="nav-item" data-view="api-keys" data-runbook-feature="api-key-setup" data-runbook-title="API Key Setup" data-runbook-description="Generate secure API keys for staging and production.">API Keys</button>
-            <button type="button" class="nav-item" data-view="deployments" data-runbook-feature="deployment-status" data-runbook-title="Deployment Status" data-runbook-description="Track rollout progress and rollback safety controls.">Deployments</button>
-            <button type="button" class="nav-item" data-view="settings" data-runbook-feature="settings-panel" data-runbook-title="Settings Panel" data-runbook-description="Configure workspace defaults and assistant behavior.">Settings</button>
-          </nav>
-
-          <div class="checklist" data-runbook-feature="onboarding-checklist" data-runbook-title="Onboarding Checklist" data-runbook-description="Follow this sequence to launch onboarding successfully.">
-            <p class="section-label">Launch Checklist</p>
-            <ol>
-              <li>Connect two integrations</li>
-              <li>Create a staging API key</li>
-              <li>Publish first workflow</li>
-              <li>Deploy to staging</li>
-            </ol>
-          </div>
-        </aside>
-
-        <main class="content">
-          <section id="view-overview" class="view active-view">
-            <div class="cards four-col">
-              <article class="metric-card" data-runbook-feature="workflow-health" data-runbook-title="Workflow Health" data-runbook-description="Review throughput, failures, and latency trends.">
-                <h3>Workflow Health</h3>
-                <p class="metric" id="healthMetric">98.6%</p>
-                <p class="subtle">7 active runs · 0 critical alerts</p>
-              </article>
-              <article class="metric-card" data-runbook-feature="integration-coverage" data-runbook-title="Integration Coverage" data-runbook-description="Track which essential connectors are configured.">
-                <h3>Integration Coverage</h3>
-                <p class="metric" id="integrationMetric">4 / 7</p>
-                <p class="subtle">GitHub + Slack connected</p>
-              </article>
-              <article class="metric-card" data-runbook-feature="api-key-compliance" data-runbook-title="API Key Compliance" data-runbook-description="See whether environment keys are present and rotated.">
-                <h3>API Key Compliance</h3>
-                <p class="metric" id="keyMetric">2 / 2</p>
-                <p class="subtle">Staging and production keys active</p>
-              </article>
-              <article class="metric-card" data-runbook-feature="deployment-readiness" data-runbook-title="Deployment Readiness" data-runbook-description="Determine whether release gates are met.">
-                <h3>Deployment Readiness</h3>
-                <p class="metric" id="deployMetric">Ready</p>
-                <p class="subtle">All release checks passing</p>
-              </article>
-            </div>
-
-            <div class="cards two-col">
-              <article class="panel" data-runbook-feature="starter-templates" data-runbook-title="Starter Templates" data-runbook-description="Choose a quick-start template for common onboarding flows.">
-                <h2>Starter Templates</h2>
-                <div class="template-list">
-                  <button type="button" class="template-item">Release Automation</button>
-                  <button type="button" class="template-item">Lead Qualification</button>
-                  <button type="button" class="template-item">Incident Escalation</button>
-                </div>
-              </article>
-              <article class="panel" data-runbook-feature="activity-feed" data-runbook-title="Activity Feed" data-runbook-description="Monitor recent changes and execution events.">
-                <h2>Activity Feed</h2>
-                <ul class="activity-list" id="activityFeed">
-                  <li>Workflow "Release Guardrail" edited by Bryan</li>
-                  <li>Slack integration token rotated</li>
-                  <li>Staging deployment canary reached 75%</li>
-                </ul>
-              </article>
-            </div>
-          </section>
-
-          <section id="view-workflows" class="view">
-            <article class="panel" data-runbook-feature="workflow-canvas" data-runbook-title="Workflow Canvas" data-runbook-description="Configure trigger, conditions, and actions before deployment.">
-              <h2>Workflow Canvas</h2>
-              <div class="flow-grid">
-                <div class="flow-step">
-                  <p class="section-label">Trigger</p>
-                  <p>GitHub pull request opened</p>
-                </div>
-                <div class="flow-step">
-                  <p class="section-label">Condition</p>
-                  <p>Files changed includes /api</p>
-                </div>
-                <div class="flow-step">
-                  <p class="section-label">Action</p>
-                  <p>Request review in #api-guild</p>
-                </div>
-              </div>
-            </article>
-          </section>
-
-          <section id="view-integrations" class="view">
-            <article class="panel" data-runbook-feature="integration-cards" data-runbook-title="Integration Cards" data-runbook-description="Manage connector health and auth state.">
-              <h2>Integrations</h2>
-              <div class="cards three-col" id="integrationCards"></div>
-            </article>
-          </section>
-
-          <section id="view-api-keys" class="view">
-            <article class="panel" data-runbook-feature="api-key-generator" data-runbook-title="API Key Generator" data-runbook-description="Generate scoped keys for each environment.">
-              <h2>Create API Key</h2>
-              <form id="apiKeyForm" class="form-grid">
-                <label for="keyName">Key name</label>
-                <input id="keyName" name="keyName" placeholder="web-staging" />
-                <label for="keyEnv">Environment</label>
-                <select id="keyEnv" name="keyEnv">
-                  <option>Staging</option>
-                  <option>Production</option>
-                </select>
-                <button type="submit" class="primary-btn">Generate key</button>
-              </form>
-            </article>
-          </section>
-
-          <section id="view-deployments" class="view">
-            <article class="panel" data-runbook-feature="rollout-progress" data-runbook-title="Rollout Progress" data-runbook-description="Observe rollout phase and control release safety.">
-              <h2>Rollout Progress</h2>
-              <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="75" aria-label="Production rollout progress">
-                <div class="progress-fill"></div>
-              </div>
-              <p class="subtle">75% complete · Production canary in progress</p>
-              <div class="btn-row">
-                <button type="button" class="ghost-btn">Pause rollout</button>
-                <button type="button" class="danger-btn">Rollback now</button>
-              </div>
-            </article>
-          </section>
-
-          <section id="view-settings" class="view">
-            <article class="panel" data-runbook-feature="assistant-branding" data-runbook-title="Assistant Branding" data-runbook-description="Customize the embedded assistant identity and behavior.">
-              <h2>Assistant Settings</h2>
-              <div class="form-grid">
-                <label for="assistantName">Assistant name</label>
-                <input id="assistantName" value="Runbook Assistant" />
-                <label for="brandColor">Brand color</label>
-                <input id="brandColor" type="color" value="#6366f1" />
-              </div>
-            </article>
-          </section>
-        </main>
       </div>
+    </header>
+
+    <div class="mx-auto grid max-w-7xl gap-5 px-5 py-5 md:grid-cols-[240px_1fr]">
+      <aside class="rounded-2xl border border-white/10 bg-slate-900/80 p-4">
+        <p class="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">Navigation</p>
+        <ul class="space-y-1 text-sm" id="rb-nav-list">
+          <li><button class="rb-nav active block w-full rounded-lg px-3 py-2 text-left text-slate-300 hover:bg-white/5 hover:text-white" data-view="overview">Overview</button></li>
+          <li><button class="rb-nav block w-full rounded-lg px-3 py-2 text-left text-slate-300 hover:bg-white/5 hover:text-white" data-view="workflows">Workflows</button></li>
+          <li><button class="rb-nav block w-full rounded-lg px-3 py-2 text-left text-slate-300 hover:bg-white/5 hover:text-white" data-view="integrations">Integrations</button></li>
+          <li><button class="rb-nav block w-full rounded-lg px-3 py-2 text-left text-slate-300 hover:bg-white/5 hover:text-white" data-view="api-keys">API Keys</button></li>
+          <li><button class="rb-nav block w-full rounded-lg px-3 py-2 text-left text-slate-300 hover:bg-white/5 hover:text-white" data-view="deployments">Deployments</button></li>
+          <li><button class="rb-nav block w-full rounded-lg px-3 py-2 text-left text-slate-300 hover:bg-white/5 hover:text-white" data-view="settings">Settings</button></li>
+        </ul>
+
+        <div class="mt-4 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3 text-xs text-emerald-100">
+          <p class="font-semibold">Onboarding checklist</p>
+          <ul class="mt-2 space-y-1 text-emerald-200/90">
+            <li>1. Connect integrations</li>
+            <li>2. Create API key</li>
+            <li>3. Build first workflow</li>
+            <li>4. Deploy to staging</li>
+          </ul>
+        </div>
+      </aside>
+
+      <main class="space-y-5">
+        <section class="rb-view active" data-view="overview">
+          <div class="space-y-5">
+            <section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              <article class="rounded-2xl border border-indigo-400/25 bg-gradient-to-br from-indigo-500/25 to-slate-900 p-4">
+                <p class="text-xs uppercase tracking-wide text-indigo-200">Quick action</p>
+                <p class="mt-1 text-xl font-bold text-white">Create Workflow</p>
+                <button class="mt-3 inline-block rounded-lg bg-indigo-500 px-3 py-1.5 text-xs font-semibold text-white hover:bg-indigo-400">New workflow</button>
+              </article>
+              <article class="rounded-2xl border border-white/10 bg-slate-900 p-4">
+                <p class="text-xs uppercase tracking-wide text-slate-400">Health</p>
+                <p class="mt-1 text-2xl font-bold">98.4%</p>
+                <p class="text-xs text-slate-400">7 active runs · 0 critical alerts</p>
+              </article>
+              <article class="rounded-2xl border border-white/10 bg-slate-900 p-4">
+                <p class="text-xs uppercase tracking-wide text-slate-400">Deployments</p>
+                <p class="mt-1 text-2xl font-bold text-emerald-300">Staging healthy</p>
+                <p class="text-xs text-slate-400">Prod rollout queued · ETA 6m</p>
+              </article>
+              <article class="rounded-2xl border border-white/10 bg-slate-900 p-4">
+                <p class="text-xs uppercase tracking-wide text-slate-400">API Keys</p>
+                <p class="mt-1 text-2xl font-bold">2 active</p>
+                <button class="mt-3 inline-block rounded-lg border border-white/20 px-3 py-1.5 text-xs font-semibold hover:border-white/40">Manage keys</button>
+              </article>
+            </section>
+
+            <section class="grid gap-5 lg:grid-cols-[1.2fr_1fr]">
+              <article class="rounded-2xl border border-white/10 bg-slate-900 p-4">
+                <div class="flex items-center justify-between">
+                  <h2 class="text-lg font-semibold">Workflow Builder</h2>
+                  <button class="rounded-lg border border-indigo-400/40 bg-indigo-500/15 px-3 py-1 text-xs font-semibold text-indigo-100">Open full builder</button>
+                </div>
+                <div class="mt-4 grid gap-3 md:grid-cols-3">
+                  <div class="rounded-xl border border-white/10 bg-slate-950/70 p-3">
+                    <p class="text-xs uppercase tracking-wide text-slate-500">Trigger</p>
+                    <p class="mt-1 text-sm text-slate-100">GitHub push event</p>
+                  </div>
+                  <div class="rounded-xl border border-white/10 bg-slate-950/70 p-3">
+                    <p class="text-xs uppercase tracking-wide text-slate-500">Condition</p>
+                    <p class="mt-1 text-sm text-slate-100">branch == main</p>
+                  </div>
+                  <div class="rounded-xl border border-white/10 bg-slate-950/70 p-3">
+                    <p class="text-xs uppercase tracking-wide text-slate-500">Action</p>
+                    <p class="mt-1 text-sm text-slate-100">Deploy to staging</p>
+                  </div>
+                </div>
+              </article>
+
+              <div class="space-y-5">
+                <article class="rounded-2xl border border-white/10 bg-slate-900 p-4">
+                  <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-400">Integrations</h3>
+                  <ul class="mt-3 space-y-2 text-sm">
+                    <li class="flex items-center justify-between rounded-lg bg-slate-950/60 px-3 py-2"><span>GitHub</span><span class="text-emerald-300">Connected</span></li>
+                    <li class="flex items-center justify-between rounded-lg bg-slate-950/60 px-3 py-2"><span>Slack</span><span class="text-emerald-300">Connected</span></li>
+                    <li class="flex items-center justify-between rounded-lg bg-slate-950/60 px-3 py-2"><span>PagerDuty</span><span class="text-amber-300">Not connected</span></li>
+                  </ul>
+                </article>
+
+                <article class="rounded-2xl border border-white/10 bg-slate-900 p-4">
+                  <h3 class="text-sm font-semibold uppercase tracking-wide text-slate-400">Settings</h3>
+                  <div class="mt-3 space-y-2 text-sm text-slate-300">
+                    <label class="flex items-center justify-between rounded-lg bg-slate-950/60 px-3 py-2">Enable safe mode <input type="checkbox" checked></label>
+                    <label class="flex items-center justify-between rounded-lg bg-slate-950/60 px-3 py-2">Auto deploy to staging <input type="checkbox" checked></label>
+                  </div>
+                </article>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="rb-view" data-view="workflows">
+          <article class="rounded-2xl border border-white/10 bg-slate-900 p-4">
+            <h2 class="text-lg font-semibold">Workflow templates</h2>
+            <p class="text-sm text-slate-400">Select a template, then customize trigger conditions and actions.</p>
+            <div class="mt-3 grid gap-3 md:grid-cols-3">
+              <button class="rounded-xl border border-white/10 bg-slate-950/70 px-3 py-3 text-left text-sm">Release automation</button>
+              <button class="rounded-xl border border-white/10 bg-slate-950/70 px-3 py-3 text-left text-sm">Support escalation</button>
+              <button class="rounded-xl border border-white/10 bg-slate-950/70 px-3 py-3 text-left text-sm">User lifecycle sync</button>
+            </div>
+          </article>
+        </section>
+
+        <section class="rb-view" data-view="integrations">
+          <article class="rounded-2xl border border-white/10 bg-slate-900 p-4">
+            <h2 class="text-lg font-semibold">Available integrations</h2>
+            <div class="mt-3 grid gap-3 md:grid-cols-3">
+              <div class="rounded-xl border border-white/10 bg-slate-950/70 p-3"><p class="font-semibold">GitHub</p><p class="text-emerald-300 text-xs">Connected</p></div>
+              <div class="rounded-xl border border-white/10 bg-slate-950/70 p-3"><p class="font-semibold">Slack</p><p class="text-emerald-300 text-xs">Connected</p></div>
+              <div class="rounded-xl border border-white/10 bg-slate-950/70 p-3"><p class="font-semibold">Salesforce</p><p class="text-amber-300 text-xs">Not connected</p></div>
+            </div>
+          </article>
+        </section>
+
+        <section class="rb-view" data-view="api-keys">
+          <article class="rounded-2xl border border-white/10 bg-slate-900 p-4">
+            <h2 class="text-lg font-semibold">Create API key</h2>
+            <div class="mt-3 grid gap-3 md:grid-cols-3">
+              <input class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm" placeholder="Key name (e.g. web-prod)">
+              <select class="rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm"><option>Environment: Staging</option><option>Environment: Production</option></select>
+              <button class="rounded-lg bg-indigo-500 px-3 py-2 text-sm font-semibold text-white">Generate key</button>
+            </div>
+          </article>
+        </section>
+
+        <section class="rb-view" data-view="deployments">
+          <article class="rounded-2xl border border-white/10 bg-slate-900 p-4">
+            <h2 class="text-lg font-semibold">Current rollout</h2>
+            <div class="mt-3 h-2 rounded-full bg-slate-800"><div class="h-2 w-3/4 rounded-full bg-emerald-400"></div></div>
+            <p class="mt-2 text-sm text-slate-400">75% complete · Production canary in progress</p>
+          </article>
+        </section>
+
+        <section class="rb-view" data-view="settings">
+          <article class="rounded-2xl border border-white/10 bg-slate-900 p-4">
+            <h2 class="text-lg font-semibold">Workspace settings</h2>
+            <div class="mt-3 space-y-2 max-w-sm">
+              <input class="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm" value="Runbook Assistant" />
+              <input type="color" class="h-10 w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm" value="#6366f1" />
+            </div>
+          </article>
+        </section>
+      </main>
     </div>
 
-    <!-- Replace data-project-id with your Studio project and set data-runbook-origin to your deployment -->
     <script
       src="https://runbook-main.vercel.app/runbook-embed.js"
       data-project-id="northstar-demo"
       data-runbook-origin="https://runbook-main.vercel.app"
       data-include-body-text
     ></script>
-
     <script src="./app.js"></script>
   </body>
 </html>
